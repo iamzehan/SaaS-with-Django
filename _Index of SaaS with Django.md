@@ -4,6 +4,7 @@
  [[SaaS with Django/How to follow along|How to follow along]]
  [[SaaS with Django/Mind Map|Mind Map]]
  [[SaaS with Django/Podcast Like explanation.wav|Podcast Like explanation.wav]]
+ [[SaaS with Django/README|README]]
  [[SaaS with Django/saasboard/_Index of saasboard|_Index of saasboard]]
  [[SaaS with Django/Study Plans|Study Plans]]
  [[SaaS with Django/Timeline|Timeline]]
