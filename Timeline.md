@@ -1,0 +1,135 @@
+## Detailed Timeline
+
+- **Conceptualization of the SaaS Foundations Course:** The course creator envisions a project where developers can build a SaaS application to potentially generate monthly recurring revenue from code written in a weekend. The goal is to teach the foundations of building and scaling such an application.
+- **Course Technology Stack Selection:** The creator chooses a modern technology stack including Django (Python web framework), Stripe (payment processing), Neon (PostgreSQL database), TailwindCSS (CSS framework), Flowbite (TailwindCSS components), and GitHub Actions (CI/CD). Python is the core language.
+- **Project Setup - Local Development:**A project folder named "SAS" (or "SAS foundations") is created.
+- The workspace is saved in VS Code.
+- An "SRC" folder is created within the project to house the Django code.
+- A requirements.txt file is created to specify Python package dependencies, initially listing Django with a version constraint (>=5.0, <=5.2).
+- A Python virtual environment is created using python3 -m venv venv and activated.
+- The requirements.txt file is installed using pip install -r requirements.txt.
+- Pip is potentially upgraded for best practices.
+- **Creating the Django Project:**The developer navigates into the "SRC" folder (cd SRC).
+- The Django project is initiated using django-admin startproject CFEhome .. This creates the project files directly within the "SRC" folder.
+- **Initial Django Run:**The developer runs the development server using python manage.py runserver.
+- The default Django "Hello World" landing page is observed in the browser.
+- **Setting up Basic Views and URLs:**A views.py file is created within the "CFEhome" project (or potentially an app later, though initially shown within the project).
+- A basic view function (e.g., homepage_view) is created to return an HTTP response.
+- A urls.py file is created or modified within the "CFEhome" project to define URL patterns.
+- A URL path (e.g., "hello-world/") is routed to the created view function.
+- **Configuring Templates:**A "templates" folder is created at the project root level.
+- The DIRS setting in settings.py is configured to point to the "templates" folder, allowing Django to find templates there.
+- A basic HTML template (e.g., home.html) is created within the "templates" folder.
+- The view function is modified to render this template using render.
+- **Implementing Template Inheritance and Includes:**A base.html template is created to define a base structure for pages.
+- Templates can now extend from base.html to inherit its structure and define content within blocks.
+- Smaller template snippets (e.g., snippets/welcome_user_msg.html) are created and included in other templates using the {% include ... %} tag.
+- Basic template logic like conditional statements ({% if user.is_authenticated %}) is demonstrated.
+- **Setting up Git Version Control:**A Git repository is initialized in the project root.
+- A .gitignore file is created and configured to ignore the virtual environment (venv/) and other standard Python/Mac files.
+- Files are added to the staging area (git add --all).
+- An initial commit is made with a descriptive message (git commit -m "Hello World MSG").
+- A new private repository is created on GitHub (e.g., "sess-and-R&D-sample" or "SAS-foundations").
+- The local Git repository is linked to the remote GitHub repository (git remote add origin ...).
+- The initial commit is pushed to GitHub (git push origin main).
+- **Preparing for Deployment with Docker and Railway:**Docker is introduced as the containerization technology.
+- Railway is chosen as the deployment platform, which simplifies Docker usage.
+- A Dockerfile and Railway.toml configuration file are created to define the application's container and deployment settings on Railway.
+- Watch patterns are defined in Railway.toml to trigger builds when specific files (source code, requirements) change.
+- Changes are committed and pushed to GitHub, preparing for Railway deployment.
+- **Deploying to Railway:**An account is created on Railway, often by authenticating with GitHub.
+- A new project is created on Railway and linked to the GitHub repository containing the Django project.
+- Railway automatically builds and deploys the application based on the Dockerfile and Railway.toml.
+- The ephemeral nature of Docker containers and the implications for databases (default SQLite being destroyed on redeployment) are highlighted.
+- **Configuring Environment Variables:**The importance of using environment variables for settings like DEBUG and SECRET_KEY is explained, especially for production.
+- Initial environment variable handling is shown using Python's os.environ.get(), demonstrating how to cast values and provide defaults.
+- The python-decouple library is introduced and added to requirements.txt as a more robust way to manage environment variables from a .env file.
+- The settings.py is updated to use config() from python-decouple to load settings.
+- The concept of exporting environment variables in the terminal is shown as a temporary local solution.
+- **Setting up a Production Database with Neon:**Neon is introduced as a serverless PostgreSQL database specifically recommended for its branching feature.
+- The process of creating a database in Neon is described, including potentially changing the database name and adding roles.
+- The connection string provided by Neon is highlighted as the key to connecting the Django application.
+- **Structuring Static Files:**The concept of static files (CSS, JavaScript, images) in Django is explained.
+- A "static-files" folder is created at the project root.
+- Subfolders (e.g., "vendors") are created within "static-files" to organize external libraries.
+- External CSS and JavaScript files (like Flowbite) are manually downloaded and placed in the "static-files/vendors" folder.
+- The "vendors" folder within "static-files" is added to .gitignore to avoid committing large vendor files.
+- The STATICFILES_DIRS setting in settings.py is configured to point to the "static-files" directory.
+- The STATIC_ROOT setting is configured to define where static files will be collected for deployment (e.g., "local-cdn").
+- The local-cdn directory is also added to .gitignore.
+- **Implementing a Custom Management Command for Vendor Static Files:**A "management/commands" structure is created within a Django app (e.g., a new commando app, which is later integrated into profiles).
+- A new custom command file (e.g., vendor_pole.py) is created.
+- The command is designed to download vendor static files from specified URLs using the requests library.
+- A helper module (helpers/downloader.py) is created with a download_to_local function using requests and pathlib.
+- The custom command utilizes the helper function to download the vendor files to the configured STATICFILES_DIRS.
+- The custom command is added to the Dockerfile's build process to automate the download during deployment.
+- **Configuring Email Sending with Gmail:**The need for transactional email (e.g., for user verification) is explained.
+- Gmail is chosen as a temporary solution for testing and local development.
+- The process of setting up two-factor authentication and generating an App Password in Google Account security settings is outlined.
+- Django's email backend settings (EMAIL_BACKEND, EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD) are configured in settings.py, likely using environment variables or python-decouple.
+- The Django sendtestemail management command is used to verify the email configuration.
+- The ADMINS and MANAGERS settings are configured to receive email notifications for server errors.
+- **Implementing User Authentication and Allauth:**Django's built-in user authentication system is leveraged.
+- The django-allauth package is introduced and added to requirements.txt for more comprehensive authentication features (registration, email confirmation, social login).
+- django-allauth is added to INSTALLED_APPS in settings.py.
+- Allauth-specific settings (like ACCOUNT_AUTHENTICATION_METHOD, ACCOUNT_EMAIL_VERIFICATION, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL) are configured.
+- Allauth's URL patterns are included in the main urls.py.
+- Database migrations are run (python manage.py migrate) to create Allauth's models.
+- The Allauth-provided views and templates for login, registration, etc., become available.
+- Social authentication (specifically GitHub) is mentioned as a feature of Allauth.
+- **Exploring Django Admin and User Management:**The Django admin interface is used to manage users and permissions.
+- Creating a superuser (python manage.py createsuperuser) is demonstrated.
+- Accessing and viewing user data in the admin is shown.
+- The User model and its methods (like has_perm, groups.all()) are explored in the Django shell.
+- **Implementing User Permissions and Groups:**Django's built-in permission system is introduced.
+- Permissions are initially explored and managed through the Django admin, demonstrating granting staff status and object-level permissions (view, change users).
+- The potential risks of granting excessive permissions in the admin are highlighted.
+- The concept of creating custom permissions is mentioned for a more fine-grained approach.
+- User groups are introduced as a way to assign permissions to multiple users.
+- Groups are created in the Django admin (e.g., "view users", "basic plan", "pro plan").
+- Users are added to groups in the admin.
+- Accessing user groups programmatically (user.groups.all()) is shown.
+- Changing view behavior based on a user's group membership is demonstrated.
+- Setting user groups based on a subscription or external logic is explored using Python sets to manage group IDs efficiently.
+- **Integrating Stripe for Subscriptions:**Stripe is introduced for handling recurring financial transactions (subscriptions).
+- A Stripe account and dashboard are necessary, with a focus on using test mode initially.
+- The stripe Python library is added to requirements.txt.
+- The Stripe API key is configured, ideally using environment variables and python-decouple.
+- A value error is intentionally raised in production if a test key is used, emphasizing the importance of production keys.
+- A Django model (UserSubscription or similar) is created to link Django users to Stripe customer IDs.
+- A model for SubscriptionPrice or ProductPrice is created to represent Stripe products and prices in the Django application, including details like Stripe ID, recurring interval, and price amount.
+- Helper functions are likely developed to interact with the Stripe API (e.g., creating customers, creating checkout sessions).
+- Checkout sessions are implemented using Stripe's API to handle the payment flow.
+- Stripe webhooks are introduced as a crucial mechanism for receiving real-time updates from Stripe about subscription changes (creation, renewal, cancellation).
+- **Handling Subscription Syncing and Status:**A management command (e.g., sync_user_subs) is created to synchronize user subscription statuses with Stripe.
+- This command can filter subscriptions based on status (active, trialing) and potentially days left until renewal or days since the period ended.
+- A subscription utility function (refresh_user_subscription) is created to update a user's subscription status based on information from Stripe.
+- This utility function is used in views (e.g., a profile view or a dedicated webhook view) and the management command.
+- The concept of "dangling" subscriptions (subscriptions in Stripe but not reflected in the application) is addressed, and the management command includes logic to identify and handle them.
+- **Implementing Timing and Filtering in QuerySets:**Python's datetime and timedelta are used to perform date and time calculations.
+- Custom model manager or queryset methods are created to filter subscriptions based on dates (e.g., by_days_left, by_days_ago, by_range) using Django's Q lookups for complex filtering.
+- **Using GitHub Actions for CI/CD (Further Configuration):**GitHub Actions workflows are used to automate processes like running tests and database migrations.
+- The migrate command is added to a GitHub Actions workflow to ensure the database is updated on deployment or after code changes.
+- GitHub Secrets are used to securely store sensitive information like the Django secret key and Stripe API key in the CI/CD environment.
+- Generating a secure Django secret key using openssl or Python is demonstrated for use in environment variables or secrets.
+
+## Cast of Characters
+
+- **Course Creator/Narrator:** The primary speaker and guide throughout the tutorial. They are the one demonstrating the code, explaining the concepts, and building the SaaS application. Their goal is to teach others how to do the same.
+- **Hungry Pie:** A specific user account used for testing and demonstration purposes in the Django admin and application views. This user's permissions and group memberships are manipulated to show different access levels.
+- **Justin:** Another user account mentioned briefly as a potential recipient of emails or as a user in the system.
+- **Django:** The Python web framework used as the foundation of the application. While not a person, it is a central "character" in the narrative, providing core functionalities like routing, views, templates, authentication, and the admin interface.
+- **Stripe:** The payment processing platform integrated into the application for handling subscriptions and financial transactions. Like Django, it's a crucial external service.
+- **Neon:** The serverless PostgreSQL database used to store the application's data. Its features, like branching, are highlighted.
+- **Flowbite:** A library of Tailwind CSS components used to quickly build the user interface and give the application a professional look.
+- **Railway:** The deployment platform used to host the application, simplifying the use of Docker containers.
+- **GitHub:** The version control platform where the project's code is stored and where GitHub Actions are configured for CI/CD.
+- **Google/Gmail:** Used as a transactional email service for testing and local development, requiring specific security configurations like App Passwords.
+- **Python-Decouple:** A Python library used to manage environment variables from a .env file, providing a structured way to handle application settings.
+- **Requests:** A Python library used for making HTTP requests, specifically for downloading external files (like vendor static files) in the custom management command.
+- **Pathlib:** A built-in Python library used for working with file paths in an object-oriented way, utilized in the downloader helper function.
+- **Django-Allauth:** A third-party Django package used to handle comprehensive user authentication workflows, including registration, email confirmation, and social login.
+- **Docker:** The containerization technology used to package and deploy the application consistently across different environments.
+- **OpenSSL:** A command-line tool mentioned for generating secure random strings, specifically for the Django secret key.
+
+This timeline and character list provide a structured overview of the key events and entities involved in building the SaaS application based on the provided tutorial excerpts.
