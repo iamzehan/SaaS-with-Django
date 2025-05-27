@@ -3,3 +3,6 @@ _Index of SaaS with Django.md
 saasboard/.gitignore
 saasboard/.venv
 .env
+**/migrations/__pycache__/
+**__pycache__
+db.sqlite3
