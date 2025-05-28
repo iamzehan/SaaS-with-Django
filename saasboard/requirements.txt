@@ -3,6 +3,7 @@ dotenv
 gunicorn
 python-decouple
 python-dotenv
+python-helpers
 psycopg[binary]
 dj-database-url
 requests
