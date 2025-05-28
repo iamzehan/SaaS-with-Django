@@ -1,0 +1,1 @@
+python saasboard/src/manage.py runserver
