@@ -22,5 +22,5 @@ urlpatterns = [
     path("", landing_views.landing_dashboard_page_view, name='home'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
-    
+    path('dashboard/', landing_views.landing_dashboard_page_view, name='dashboard'),
 ]
