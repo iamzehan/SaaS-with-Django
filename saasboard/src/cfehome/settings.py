@@ -15,6 +15,13 @@ from urllib.parse import urlparse
 
 from pathlib import Path
 
+# Load environment variables from .env file
+# The `load_dotenv()` function is used to load environment variables from a `.env` file into the
+# current environment. This is commonly used in Django projects to keep sensitive information like API
+# keys, database credentials, and other configuration settings outside of the codebase and in a
+# separate file for security and flexibility reasons.
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o6(76c*amabn-k45z^pv!182(kx51)vo2s%dmdvezsq*f$tf1x'  # ⚠️⚠️⚠️
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #⚠️⚠️⚠️
@@ -92,8 +99,6 @@ WSGI_APPLICATION = 'cfehome.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 #---------------------------Production---------------------------
-# Load environment variables from .env file
-load_dotenv()
 
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 print(tmpPostgres)
