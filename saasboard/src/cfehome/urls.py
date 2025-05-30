@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from landing import views as landing_views
+from subscriptions import views as subs_views
 
 urlpatterns = [
     path("", landing_views.landing_dashboard_page_view, name='home'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('dashboard/', landing_views.landing_dashboard_page_view, name='dashboard'),
+    path("pricing/", subs_views.subscription_price_view, name='pricing'),
+    path("pricing/<str:interval>/", subs_views.subscription_price_view, name='pricing_interval'),
+    path('accounts/billing/', subs_views.user_subscription_view, name='user_subscription'),
+    path('accounts/billing/cancel', subs_views.user_subscription_cancel_view, name='user_subscription_cancel'),
 ]
