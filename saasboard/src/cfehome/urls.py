@@ -28,4 +28,5 @@ urlpatterns = [
     path("pricing/<str:interval>/", subs_views.subscription_price_view, name='pricing_interval'),
     path('accounts/billing/', subs_views.user_subscription_view, name='user_subscription'),
     path('accounts/billing/cancel', subs_views.user_subscription_cancel_view, name='user_subscription_cancel'),
+    path('profiles/', include('profiles.urls')),
 ]
