@@ -10,7 +10,7 @@ def profile_list_view(request):
     context = {
         "object_list": User.objects.filter(is_active=True)
     }
-    return render(request, "profiles/list.html", context)
+    return render(request, "profiles/lists.html", context)
 
 
 @login_required
@@ -33,4 +33,4 @@ def profile_detail_view(request, username=None, *args, **kwargs):
         "instance": profile_user_obj,
         "owner": is_me,
     }
-    return render(request, "profiles/detail.html", context)
+    return render(request, "profiles/details.html", context)
