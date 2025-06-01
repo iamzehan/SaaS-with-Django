@@ -6,6 +6,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 @login_required
+def my_profile_view(request):
+    return render(request, "profiles/my_profile.html", {"user": request.user})
+
+@login_required
 def profile_list_view(request):
     context = {
         "object_list": User.objects.filter(is_active=True)
